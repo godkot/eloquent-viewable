@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace CyrildeWit\EloquentViewable;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Traits\Macroable;
 use CyrildeWit\EloquentViewable\Support\Key;
 use CyrildeWit\EloquentViewable\Support\Period;
@@ -203,6 +205,8 @@ class Views
             $view->visitor = $this->resolveVisitorId();
             $view->collection = $this->collection;
             $view->viewed_at = Carbon::now();
+            $view->ip = Request::ip();
+            $view->user_id = Auth::id();
 
             return $view->save();
         }
